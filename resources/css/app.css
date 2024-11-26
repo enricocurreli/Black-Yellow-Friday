@@ -1,0 +1,93 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+*{
+    font-family: "Montserrat", sans-serif;
+    color: lightcyan;
+}
+
+h1, h2, h3, h4, h5, h6, a, li{
+
+    font-family:"Electrolize", sans-serif;
+
+}
+
+.herobgr{
+    background-image: url(../media/heroIMG.jpg);
+    background-size: cover;
+    background-position: center;
+    height: 77vh;
+
+    
+}
+.text-3d {
+    font-size: 3rem;
+    font-weight: bold;
+    color: #FDED00; /* Colore principale */
+    text-shadow: 
+      1px 1px 0px #e8c70abe, 
+      2px 2px 0px #bbc40f, 
+      3px 3px 0px #c6b70e, 
+      4px 4px 0px #000; /* Ombre per effetto 3D */
+  }
+  
+  .title-3d {
+    font-weight: bold;
+    text-shadow: 
+      1px 1px 0px #fdfdfd, 
+      2px 2px 0px #8d8d8d, 
+      3px 3px 0px #fdfdfd, 
+      4px 4px 0px #000; 
+  }
+  
+  .title2-3d {
+    
+    font-weight: bold;
+    color: #FDED00; 
+    text-shadow: 
+      1px 1px 0px #e8c70abe, 
+      2px 2px 0px #bbc40f, 
+      3px 3px 0px #c6b70e, 
+      4px 4px 0px #000; 
+  }
+  .text-3d-mobile {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: #FDED00; /* Colore principale */
+    text-shadow: 
+      1px 1px 0px #e8c70abe, 
+      2px 2px 0px #bbc40f, 
+      3px 3px 0px #c6b70e, 
+      4px 4px 0px #000; /* Ombre per effetto 3D */
+  }
+  .banner-border {
+    border: 1px solid #FDED00;
+    background: #000;
+  }
+  .filter{
+    backdrop-filter: blur(6px);
+    padding: 9px;
+  }
+  
+  .scrolledY{
+    backdrop-filter: blur(7px);
+    transition: 0.5s !important;
+   
+  }
+
+  .rotate180{
+    transform: rotateY(360deg);
+  }
+  .rotate0{
+    transform: rotateY(0deg);
+  }
+
+
+  @layer base {
+  :root {
+        --radius: 0.5rem;
+    }
+}
+
