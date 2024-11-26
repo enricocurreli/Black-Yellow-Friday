@@ -50,9 +50,9 @@ class ProductController extends Controller
         $validated = $request->validate([
             'product_id' => 'required|exists:products,id',
             'titolo' => 'required|string|min:1',
-            'descrizione' => 'required|string',
+            'descrizione' => 'required|string|max:400',
         ]);
-
+        $validated['user_name'] = $request->user()->name;
         $request->user()->reviews()->create($validated);
 
         return redirect()->back()->with('message', 'Recensione aggiunta con successo!');

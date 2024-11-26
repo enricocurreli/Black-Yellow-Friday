@@ -2,6 +2,7 @@ import Checkbox from "@/Components/Checkbox";
 import InputError from "@/Components/InputError";
 import InputLabel from "@/Components/InputLabel";
 import TextInput from "@/Components/TextInput";
+import Title from "@/Components/Title";
 import { AnimatedSubscribeButton } from "@/Components/ui/animated-subscribe-button";
 import GuestLayout from "@/Layouts/GuestLayout";
 import { Head, Link, useForm } from "@inertiajs/react";
@@ -49,7 +50,12 @@ export default function Login({
       {status && (
         <div className="mb-4 text-sm font-medium text-green-600">{status}</div>
       )}
-
+                <Title
+            tag="h1"
+            classes="text-center mt-6 md:mt-0  p-4  text-2xl content-center font-bold text-black"
+          >
+            Bentornato, è un piacere rivederti
+          </Title>
       <form onSubmit={submit}>
         <div>
           <InputLabel htmlFor="email" value="Email" />

@@ -1,7 +1,7 @@
 import { Config } from "ziggy-js";
 
 export interface User {
-  id: number;
+  id: number | null;
   name: string;
   email: string;
   email_verified_at?: string;
@@ -10,7 +10,7 @@ export interface User {
 export type PageProps<
   T extends Record<string, unknown> = Record<string, unknown>
 > = T & {
-  auth?: {
+  auth: {
     user: User;
   };
   ziggy?: Config & { location: string };
@@ -53,6 +53,7 @@ export interface ProductFormData {
   img: File | null;
 }
 export interface ReviewFormData {
+  user_name:string;
   user_id: number;
   product_id: number;
   titolo: string;
@@ -74,20 +75,34 @@ export interface Props extends PageProps {
 
 export type DetailProps = {
   product: Product;
-  auth:{
+  auth?:{
     user: User
   };
-  user:[ {
-    id: number;
-    name:string;
-  }];
-  reviews:[{
+ 
+  reviews:Reviews[]
+}
+
+export type Reviews = {
+  id:number
+  titolo:string
+  descrizione:string
+  product_id:number
+  user_id:number
+  user_name:string
+  created_at:string
+  updated_at:string
+}
+
+export type Review = {
+  review:{
+
     id:number
     titolo:string
     descrizione:string
     product_id:number
     user_id:number
+    user_name:string
     created_at:string
     updated_at:string
-  }]
+  }
 }

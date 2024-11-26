@@ -37,9 +37,9 @@ export default function Welcome({ auth, products }: Props) {
           </Title>
           <Countdown />
           <div className="flex justify-center">
-            <ShimmerButton className="w-44 md:p-5 p-3 my-5 text-[#FDED00] font-medium shadow-2xl hover:bg-base-200">
+            {/* <ShimmerButton className="w-44 md:p-5 p-3 my-5 text-[#FDED00] font-medium shadow-2xl hover:bg-base-200">
               SCOPRI
-            </ShimmerButton>
+            </ShimmerButton> */}
           </div>
         </div>
       </Article>
@@ -60,7 +60,7 @@ export default function Welcome({ auth, products }: Props) {
                     <Card.Img
                       src={"storage/" + product.img}
                       alt={product.img}
-                      classes=""
+                      classes="md:w-[300px] w-[220px]"
                     />    
                   </figure>
                   <div className="card-body">

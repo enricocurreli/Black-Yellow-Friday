@@ -19,6 +19,7 @@ return new class extends Migration
             $table->foreign('product_id')->references('id')->on('products');
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users');
+            $table->string('user_name')->references('name')->on('users');;
             $table->timestamps();
         });
     }
@@ -29,6 +30,9 @@ return new class extends Migration
     public function down(): void
     {   
         
-        Schema::dropIfExists('reviews');
+        Schema::table('reviews', function (Blueprint $table) {
+            $table->dropForeign(['product_id']);
+            $table->dropColumn('product_id');
+        });
     }
 };

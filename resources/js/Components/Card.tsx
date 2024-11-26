@@ -7,7 +7,7 @@ import Img from "./Img";
 
 const Card = ({children}: CardProps) => {
   return (
-    <div className="card glass md:w-80 w-60 h-[500px] shadow-xl my-5 hover:-translate-y-2 transition-all">
+    <div className="card glass md:w-80 w-60 h-[520px] shadow-xl my-5 hover:-translate-y-2 transition-all">
       {children}
     </div>
   );

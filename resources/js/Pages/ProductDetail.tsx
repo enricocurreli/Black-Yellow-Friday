@@ -1,21 +1,29 @@
 import Article from "@/Components/Article";
+import CardRev from "@/Components/CardRev";
 import Img from "@/Components/Img";
 import Navbar from "@/Components/Navbar";
 import Paragraph from "@/Components/Paragraph";
 import Title from "@/Components/Title";
 import DetailLayout from "@/Layouts/DetailLayout";
 import { DetailProps, Props, ReviewFormData } from "@/types";
-import { Head, useForm, usePage } from "@inertiajs/react";
+import { Head, Link, useForm, usePage } from "@inertiajs/react";
 import { div } from "framer-motion/client";
 import { useEffect, useState } from "react";
 
-const ProductDetail = ({ product, reviews,user }: DetailProps) => {
+const ProductDetail = ({ product, reviews }: DetailProps) => {
   const { flash, auth } = usePage().props;
-  const userID = auth?.user.id;
+
+  let userID;
+  let userName;
+  if (auth?.user) {
+    userID = auth.user.id;
+    userName = auth.user.name;
+  }
+
   const { data, setData, post, errors, reset, progress } =
     useForm<ReviewFormData>({
-      
-      user_id:userID!,
+      user_name: userName!,
+      user_id: userID!,
       product_id: product.id,
       titolo: "",
       descrizione: "",
@@ -29,8 +37,6 @@ const ProductDetail = ({ product, reviews,user }: DetailProps) => {
       },
     });
   };
-  
-
 
   const [flashMsg, setFlashMsg] = useState(flash?.message);
   useEffect(() => {
@@ -45,24 +51,16 @@ const ProductDetail = ({ product, reviews,user }: DetailProps) => {
     }
   }, [flash?.message]);
 
+  const { id } = product;
 
-  // console.log(user);
-  // console.log(reviews);
-  
-  const {id} = product;
- 
   //Recensione del singolo prodotto
-  const searchRev = reviews.filter((rev)=> rev.product_id == id)
- 
-
-
-  
-  
+  const searchRev = reviews.filter((rev) => rev.product_id == id);
+  console.log(searchRev);
 
   return (
     <DetailLayout>
-      <Navbar auth={auth}/>
-      
+      <Navbar auth={auth} />
+
       <Article classes="grid md:grid-cols-2 p-6 ">
         <Article classes="md:mt-40 mt-20 p-6  flex justify-center">
           <Img
@@ -71,7 +69,7 @@ const ProductDetail = ({ product, reviews,user }: DetailProps) => {
             classes=" md:w-[480px] shadow-xl rounded-xl"
           />
         </Article>
-        
+
         <Article classes="md:mt-40 mt-10 p-6  justify-center bg-sky-950 shadow-xl rounded-xl">
           <div className="flex gap-5 text-lg mb-5">
             {product.categorie.map((categoria) => {
@@ -97,23 +95,23 @@ const ProductDetail = ({ product, reviews,user }: DetailProps) => {
           </Title>
         </Article>
         {flashMsg && (
-                <div role="alert" className="alert alert-success w-1/2 m-5">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="h-6 w-6 shrink-0 stroke-current"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
-                    />
-                  </svg>
-                  <span>{flashMsg}</span>
-                </div>
-              )}
+          <div role="alert" className="alert alert-success w-1/2 m-5">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-6 w-6 shrink-0 stroke-current"
+              fill="none"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+              />
+            </svg>
+            <span>{flashMsg}</span>
+          </div>
+        )}
       </Article>
       <Article>
         <Title
@@ -122,50 +120,59 @@ const ProductDetail = ({ product, reviews,user }: DetailProps) => {
         >
           Lascia una recensione
         </Title>
-        <form
-          className="gap-5 p-5"
-          onSubmit={handleSubmitReviews}
-        >
-               <div>
-                    <label className="text-gray-900 form-control max-w-lg ">
-                      <div className="label">
-                        <span className="label-text text-lg text-gray-900">Titolo</span>
-                      </div>
-                      <input
-                        type="text"
-                        placeholder="Titolo recensione"
-                        className="input bg-white border-black  max-w-lg"
-                        value={data.titolo}
-                        onChange={(e) => setData("titolo", e.target.value)}
-                      />
-                    </label>
-                    {errors.titolo && (
-                      <div className="text-red-500">{errors.titolo}</div>
-                    )}
-                  </div>
-                  <div>
-                    <label className="form-control">
-                      <div className="label">
-                        <span className="label-text text-lg text-gray-900">
-                          Descrizione
-                        </span>
-                      </div>
-                      <textarea
-                        className="textarea bg-white border-black h-32 max-w-lg text-gray-900 "
-                        placeholder="Descrizione"
-                        value={data.descrizione}
-                        onChange={(e) => setData("descrizione", e.target.value)}
-                      ></textarea>
-                    </label>
-                    {errors.descrizione && (
-                      <div className="text-red-500">{errors.descrizione}</div>
-                    )}
-                  </div>
-                  <button className="btn text-white  bg-sky-950 mt-5" type="submit">
-                    Aggiungi
-                  </button>
-        </form>
-
+        {auth?.user ? (
+          <form className="gap-5 p-5" onSubmit={handleSubmitReviews}>
+            <div>
+              <label className="text-gray-900 form-control max-w-lg ">
+                <div className="label">
+                  <span className="label-text text-lg text-gray-900">
+                    Titolo
+                  </span>
+                </div>
+                <input
+                  type="text"
+                  placeholder="Titolo recensione"
+                  className="input bg-white border-black  max-w-lg"
+                  value={data.titolo}
+                  onChange={(e) => setData("titolo", e.target.value)}
+                />
+              </label>
+              {errors.titolo && (
+                <div className="text-red-500">{errors.titolo}</div>
+              )}
+            </div>
+            <div>
+              <label className="form-control">
+                <div className="label">
+                  <span className="label-text text-lg text-gray-900">
+                    Descrizione
+                  </span>
+                </div>
+                <textarea
+                  className="textarea bg-white border-black h-32 max-w-lg text-gray-900 "
+                  placeholder="Descrizione"
+                  value={data.descrizione}
+                  onChange={(e) => setData("descrizione", e.target.value)}
+                ></textarea>
+              </label>
+              {errors.descrizione && (
+                <div className="text-red-500">{errors.descrizione}</div>
+              )}
+            </div>
+            <button className="btn text-white  bg-sky-950 mt-5" type="submit">
+              Aggiungi
+            </button>
+          </form>
+        ) : (
+          <div className="ps-10">
+            <Link
+              className="p-5 my-3 md:text-2xl text-lg content-center font-medium text-center md:text-start btn bg-black text-[#FDED00]  shadow-2xl hover:bg-[#FDED00] hover:text-black transition-all"
+              href={route("login")}
+            >
+              Accedi
+            </Link>
+          </div>
+        )}
       </Article>
       <Article>
         <Title
@@ -174,9 +181,11 @@ const ProductDetail = ({ product, reviews,user }: DetailProps) => {
         >
           Recensioni
         </Title>
-        {
-
-        }
+        <Article classes="grid md:grid-cols-4 grid-cols-1 gap-5 p-10 bg-sky-950 justify-content ">
+          {searchRev.map((review) => {
+            return <CardRev key={review.id} review={review} />;
+          })}
+        </Article>
       </Article>
     </DetailLayout>
   );
