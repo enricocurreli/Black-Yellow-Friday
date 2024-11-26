@@ -53,7 +53,8 @@ export interface ProductFormData {
   img: File | null;
 }
 export interface ReviewFormData {
-  product_id: number
+  user_id: number;
+  product_id: number;
   titolo: string;
   descrizione: string;
 }
@@ -72,8 +73,21 @@ export interface Props extends PageProps {
 }
 
 export type DetailProps = {
-  product: Product
+  product: Product;
   auth:{
     user: User
-  }
+  };
+  user:[ {
+    id: number;
+    name:string;
+  }];
+  reviews:[{
+    id:number
+    titolo:string
+    descrizione:string
+    product_id:number
+    user_id:number
+    created_at:string
+    updated_at:string
+  }]
 }

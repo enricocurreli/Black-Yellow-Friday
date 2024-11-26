@@ -11,12 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('reviews', function (Blueprint $table) {
+        Schema::create('product_review_user', function (Blueprint $table) {
             $table->id();
-            $table->string('titolo');
-            $table->text('descrizione');
             $table->unsignedBigInteger('product_id');
             $table->foreign('product_id')->references('id')->on('products');
+            $table->unsignedBigInteger('review_id');
+            $table->foreign('review_id')->references('id')->on('reviews');
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users');
             $table->timestamps();
@@ -27,8 +27,7 @@ return new class extends Migration
      * Reverse the migrations.
      */
     public function down(): void
-    {   
-        
-        Schema::dropIfExists('reviews');
+    {
+        Schema::dropIfExists('product_review_user');
     }
 };

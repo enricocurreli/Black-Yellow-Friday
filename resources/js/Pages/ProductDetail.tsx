@@ -9,18 +9,19 @@ import { Head, useForm, usePage } from "@inertiajs/react";
 import { div } from "framer-motion/client";
 import { useEffect, useState } from "react";
 
-const ProductDetail = ({ product }: DetailProps) => {
+const ProductDetail = ({ product, reviews,user }: DetailProps) => {
   const { flash, auth } = usePage().props;
   const userID = auth?.user.id;
   const { data, setData, post, errors, reset, progress } =
     useForm<ReviewFormData>({
-
-      product_id: userID!,
+      
+      user_id:userID!,
+      product_id: product.id,
       titolo: "",
       descrizione: "",
     });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmitReviews = (e: React.FormEvent) => {
     e.preventDefault();
     post("/reviews", {
       onSuccess: () => {
@@ -28,6 +29,8 @@ const ProductDetail = ({ product }: DetailProps) => {
       },
     });
   };
+  
+
 
   const [flashMsg, setFlashMsg] = useState(flash?.message);
   useEffect(() => {
@@ -42,17 +45,33 @@ const ProductDetail = ({ product }: DetailProps) => {
     }
   }, [flash?.message]);
 
+
+  // console.log(user);
+  // console.log(reviews);
+  
+  const {id} = product;
+ 
+  //Recensione del singolo prodotto
+  const searchRev = reviews.filter((rev)=> rev.product_id == id)
+ 
+
+
+  
+  
+
   return (
     <DetailLayout>
       <Navbar auth={auth}/>
+      
       <Article classes="grid md:grid-cols-2 p-6 ">
         <Article classes="md:mt-40 mt-20 p-6  flex justify-center">
           <Img
             src={"/storage/" + product.img}
             alt={product.img}
-            classes=" w-96  shadow-xl rounded-xl"
+            classes=" md:w-[480px] shadow-xl rounded-xl"
           />
         </Article>
+        
         <Article classes="md:mt-40 mt-10 p-6  justify-center bg-sky-950 shadow-xl rounded-xl">
           <div className="flex gap-5 text-lg mb-5">
             {product.categorie.map((categoria) => {
@@ -76,8 +95,25 @@ const ProductDetail = ({ product }: DetailProps) => {
             {" -> "}
             {product.prezzo_scontato} €
           </Title>
-          <Paragraph classes="text-lg ">Creato da: </Paragraph>
         </Article>
+        {flashMsg && (
+                <div role="alert" className="alert alert-success w-1/2 m-5">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="h-6 w-6 shrink-0 stroke-current"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+                    />
+                  </svg>
+                  <span>{flashMsg}</span>
+                </div>
+              )}
       </Article>
       <Article>
         <Title
@@ -88,7 +124,7 @@ const ProductDetail = ({ product }: DetailProps) => {
         </Title>
         <form
           className="gap-5 p-5"
-          onSubmit={handleSubmit}
+          onSubmit={handleSubmitReviews}
         >
                <div>
                     <label className="text-gray-900 form-control max-w-lg ">
@@ -129,24 +165,7 @@ const ProductDetail = ({ product }: DetailProps) => {
                     Aggiungi
                   </button>
         </form>
-        {flashMsg && (
-                <div role="alert" className="alert alert-success w-1/2 m-5">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="h-6 w-6 shrink-0 stroke-current"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
-                    />
-                  </svg>
-                  <span>{flashMsg}</span>
-                </div>
-              )}
+
       </Article>
       <Article>
         <Title
@@ -155,6 +174,9 @@ const ProductDetail = ({ product }: DetailProps) => {
         >
           Recensioni
         </Title>
+        {
+
+        }
       </Article>
     </DetailLayout>
   );

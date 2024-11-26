@@ -16,17 +16,26 @@ class Product extends Model
         'img',
         'descrizione',
         'categorie',
-        'img'
+        'img',
         
-        
+
+
     ];
     protected $casts = [
         'categorie' => 'array',
-        
-    ];
-    public function reviews()
-{
-    return $this->hasMany(Reviews::class);
-}
 
+    ];
+
+
+
+    public function reviews()
+    {
+        return $this->hasMany(Review::class);
+    }
+    public function products()
+    {
+        return $this->hasMany(Product::class);
+    }
+ 
+ 
 }

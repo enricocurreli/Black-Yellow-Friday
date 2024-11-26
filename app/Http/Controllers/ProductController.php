@@ -7,12 +7,15 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 use App\Http\Requests\ProductRequest;
-use App\Models\Reviews;
+use App\Models\Review;
+use App\Models\User;
+use Illuminate\Container\Attributes\Auth;
 
 class ProductController extends Controller
 {
     public function index(Request $request)
-    {
+    {   
+     
         $products = Product::all();
         return Inertia('Welcome', ['products' => $products]);
     }
@@ -31,22 +34,32 @@ class ProductController extends Controller
         $product->img = $imagePath;
         $product->save();
 
-
-
         return redirect()->back()->with('message', 'Prodotto salvato con successo!');
     }
 
     public function show(Product $product)
-    {
-
-        return Inertia::render('ProductDetail', ['product' => $product]);
+    {   
+        $reviews= Review::all();
+        $user = User::whereHas('reviews')->get(['id', 'name']);
+              
+        return Inertia::render('ProductDetail', ['product' => $product, 'user' => $user,'reviews' => $reviews]);
     }
 
     public function storeReview(Request $request)
     {
+        $validated = $request->validate([
+            'product_id' => 'required|exists:products,id',
+            'titolo' => 'required|string|min:1',
+            'descrizione' => 'required|string',
+        ]);
 
-       
+        $request->user()->reviews()->create($validated);
+
+        return redirect()->back()->with('message', 'Recensione aggiunta con successo!');
+
+
     }
+
 
 
 }
