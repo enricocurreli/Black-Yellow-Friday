@@ -1,5 +1,5 @@
 
-Progetto realizzato per la chanllenge Full-stack di Aulab in occasione del BlackFriaday.
+Progetto realizzato per la challenge Full-stack di Aulab in occasione del BlackFriaday.
 Stack utilizzato:
 # Beckend: Laravel;
 # Database: MySQL;
