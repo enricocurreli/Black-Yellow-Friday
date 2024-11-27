@@ -1,10 +1,12 @@
+import Article from "@/Components/Article";
+import CardRev from "@/Components/CardRev";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
-import { ProductFormData } from "@/types";
-import { Head, useForm, usePage } from "@inertiajs/react";
+import { DetailProps, ProductFormData, Review, Reviews } from "@/types";
+import { Head, Link, useForm, usePage } from "@inertiajs/react";
 import { pre } from "framer-motion/client";
 import { ChangeEvent, useEffect, useState } from "react";
 
-export default function Dashboard() {
+export default function Dashboard({ reviews, prodRev }: DetailProps) {
   const { data, setData, post, errors, reset, progress } =
     useForm<ProductFormData>({
       titolo: "",
@@ -23,7 +25,8 @@ export default function Dashboard() {
       },
     });
   };
-
+  console.log(reviews, prodRev);
+  
   const { flash, auth } = usePage().props;
   const [flashMsg, setFlashMsg] = useState(flash?.message);
   useEffect(() => {
@@ -48,6 +51,8 @@ export default function Dashboard() {
   };
   const user = auth?.user.name;
   const [openAdd, setOpenAdd] = useState<boolean>(false);
+  const [openRev, setOpenRev] = useState<boolean>(false);
+  console.log(reviews);
 
   return (
     <AuthenticatedLayout
@@ -58,17 +63,28 @@ export default function Dashboard() {
       }
     >
       <Head title="Dashboard" />
-      <div className="py-12">
+      <div className="py-12 md:h-[80vh] lg:h-[100vh]">
         <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">
           <div className=" bg-white shadow-sm sm:rounded-lg dark:bg-gray-800 my-10 p-5 md:p-0">
             <div className="flex justify-between border border-gray-300 p-6 rounded-lg">
               <div className=" text-gray-900 text-2xl dark:text-gray-100   mb-4 ">
                 Aggiungi un nuovo prodotto
               </div>
-              {
-                !openAdd ? (<div className=" content-center  text-gray-900 text-2xl dark:text-gray-100  cursor-pointer  rotate-90 " onClick={()=>setOpenAdd(!openAdd)}>❯</div>): (<div className=" content-center  text-gray-900 text-2xl dark:text-gray-100  cursor-pointer  -rotate-90 " onClick={()=>setOpenAdd(!openAdd)}>❯</div>)
-              }
-              
+              {!openAdd ? (
+                <div
+                  className=" content-center  text-gray-900 text-2xl dark:text-gray-100  cursor-pointer  rotate-90 "
+                  onClick={() => setOpenAdd(!openAdd)}
+                >
+                  ❯
+                </div>
+              ) : (
+                <div
+                  className=" content-center  text-gray-900 text-2xl dark:text-gray-100  cursor-pointer  -rotate-90 "
+                  onClick={() => setOpenAdd(!openAdd)}
+                >
+                  ❯
+                </div>
+              )}
             </div>
             <div>
               {openAdd ? (
@@ -227,6 +243,58 @@ export default function Dashboard() {
               )}
             </div>
           </div>
+          <div className="p-5">
+            <div className="flex justify-between border border-gray-300 p-6 rounded-lg">
+              <div className=" text-gray-900 text-2xl dark:text-gray-100   mb-4 ">
+                Le tue recensioni
+              </div>
+              {!openRev ? (
+                <div
+                  className=" content-center  text-gray-900 text-2xl dark:text-gray-100  cursor-pointer  rotate-90 "
+                  onClick={() => setOpenRev(!openRev)}
+                >
+                  ❯
+                </div>
+              ) : (
+                <div
+                  className=" content-center  text-gray-900 text-2xl dark:text-gray-100  cursor-pointer  -rotate-90 "
+                  onClick={() => setOpenRev(!openRev)}
+                >
+                  ❯
+                </div>
+              )}
+            </div>
+          </div>
+          <Article classes="grid xl:grid-cols-3 lg:grid-cols-2 md:grid-cols-2 grid-cols-1 gap-5 p-10 justify-content ">
+            {openRev
+              ? reviews.map((review) => {
+                  return (
+                    <div
+                    key={review.id}
+                      className={
+                        "card bg-zinc-300 text-primary-content max-h-[700px]"
+                      }
+                    >
+                      <div className="card-body">
+                       
+                          {
+                            prodRev.map((prod)=> {
+                              if(prod.id === review.product_id){
+                                return <Link href={`product/show/${prod.id}`} className="card-title text-black"> {prod.titolo} </Link >
+                            }})  
+                          } 
+                        
+                        
+                        <h2 className=" font-bold text-black">
+                          {review.titolo}
+                        </h2>
+                        <p className="text-black">{review.descrizione}</p>
+                      </div>
+                    </div>
+                  );
+                })
+              : ""}
+          </Article>
         </div>
       </div>
     </AuthenticatedLayout>

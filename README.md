@@ -1,3 +1,25 @@
+
+Progetto realizzato per la chanllenge Full-stack di Aulab in occasione del BlackFriaday.
+Stack utilizzato:
+# Beckend: Laravel;
+# Database: MySQL;
+# Frontend: React + TypeScript;
+# CSS: Tailwind CSS + DaisyUI e MagicUI;
+# Bridge Client-Server: Inertia.js;
+
+*Authentication* : Utilizzo di Laravel Breeze.
+*Routing* : Utilizzo di Laravel e Inertia.js.
+*Mission* : Creazione di prodotti digitali e lasciare recensioni se loggati
+*Comming Soon* : Possibilità di aggiungere prodotti al proprio carrello
+
+
+
+
+
+
+
+
+
 <p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
 <p align="center">

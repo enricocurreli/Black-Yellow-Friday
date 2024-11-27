@@ -61,12 +61,12 @@ const ProductDetail = ({ product, reviews }: DetailProps) => {
     <DetailLayout>
       <Navbar auth={auth} />
 
-      <Article classes="grid md:grid-cols-2 p-6 ">
-        <Article classes="md:mt-40 mt-20 p-6  flex justify-center">
+      <Article classes="grid lg:grid-cols-2 p-6 ">
+        <Article classes="lg:mt-40 mt-20 p-6  flex justify-center">
           <Img
             src={"/storage/" + product.img}
             alt={product.img}
-            classes=" md:w-[480px] shadow-xl rounded-xl"
+            classes=" md:w-[580px]   shadow-xl rounded-xl"
           />
         </Article>
 
@@ -113,19 +113,19 @@ const ProductDetail = ({ product, reviews }: DetailProps) => {
           </div>
         )}
       </Article>
-      <Article>
+      <Article classes="bg-sky-950 mt-20">
         <Title
           tag="h2"
-          classes="md:mt-8  mt-8 p-4 md:ps-10 md:text-4xl text-3xl content-center font-bold text-center md:text-start"
+          classes="md:pt-10 mt-8 p-4 md:ps-10 md:text-4xl text-3xl content-center font-bold text-center md:text-start"
         >
           Lascia una recensione
         </Title>
         {auth?.user ? (
-          <form className="gap-5 p-5" onSubmit={handleSubmitReviews}>
+          <form className="gap-5 p-10" onSubmit={handleSubmitReviews}>
             <div>
               <label className="text-gray-900 form-control max-w-lg ">
                 <div className="label">
-                  <span className="label-text text-lg text-gray-900">
+                  <span className="label-text text-lg text-white">
                     Titolo
                   </span>
                 </div>
@@ -144,7 +144,7 @@ const ProductDetail = ({ product, reviews }: DetailProps) => {
             <div>
               <label className="form-control">
                 <div className="label">
-                  <span className="label-text text-lg text-gray-900">
+                  <span className="label-text text-lg text-white">
                     Descrizione
                   </span>
                 </div>
@@ -159,7 +159,7 @@ const ProductDetail = ({ product, reviews }: DetailProps) => {
                 <div className="text-red-500">{errors.descrizione}</div>
               )}
             </div>
-            <button className="btn text-white  bg-sky-950 mt-5" type="submit">
+            <button className="p-5 my-5 md:text-2xl text-lg content-center font-medium text-center md:text-start btn bg-black text-[#FDED00]  shadow-2xl hover:bg-[#FDED00] hover:text-black transition-all" type="submit">
               Aggiungi
             </button>
           </form>
@@ -173,19 +173,19 @@ const ProductDetail = ({ product, reviews }: DetailProps) => {
             </Link>
           </div>
         )}
-      </Article>
       <Article>
         <Title
           tag="h2"
-          classes="md:my-8 mt-8 p-4 ps-10 md:text-4xl text-3xl content-center font-bold text-center md:text-start"
+          classes="md:my-5 mt-8 p-4 ps-10 md:text-4xl text-3xl content-center font-bold text-center md:text-start"
         >
           Recensioni
         </Title>
-        <Article classes="grid md:grid-cols-4 grid-cols-1 gap-5 p-10 bg-sky-950 justify-content ">
+        <Article classes="grid xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-5 p-10 justify-content ">
           {searchRev.map((review) => {
-            return <CardRev key={review.id} review={review} />;
+            return <CardRev key={review.id} review={review} classes="max-w-[370px]" />;
           })}
         </Article>
+      </Article>
       </Article>
     </DetailLayout>
   );

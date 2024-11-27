@@ -80,6 +80,10 @@ export type DetailProps = {
   };
  
   reviews:Reviews[]
+  prodRev:[{
+    id: number;
+    titolo:string
+  }]
 }
 
 export type Reviews = {
@@ -105,4 +109,5 @@ export type Review = {
     created_at:string
     updated_at:string
   }
+  classes:string;
 }

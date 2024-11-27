@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ProfileUpdateRequest;
+use App\Models\Product;
+use App\Models\Review;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -59,5 +61,28 @@ class ProfileController extends Controller
         $request->session()->regenerateToken();
 
         return Redirect::to('/');
+    }
+
+    public function dashboardView()
+    {
+        $userId = Auth::id();
+        $reviews = Review::where('user_id', $userId)->get();
+        $products = Product::all();
+        $reviewedProductIds = $reviews->pluck('product_id')->unique();
+
+        // Filtra i prodotti che corrispondono agli ID delle recensioni
+        $filteredProducts = $products->filter(function ($product) use ($reviewedProductIds) {
+            return $reviewedProductIds->contains($product->id);
+        });
+
+        // Ottieni solo l'ID e il nome dei prodotti
+        $prodRev = $filteredProducts->map(function ($product) {
+            return [
+                'id' => $product->id,
+                'titolo' => $product->titolo,
+            ];
+        });
+
+        return Inertia::render('Dashboard', ['reviews' => $reviews, 'prodRev'=>$prodRev]);
     }
 }
