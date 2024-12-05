@@ -64,7 +64,7 @@ export default function Dashboard({ reviews, prodRev }: DetailProps) {
       }
     >
       <Head title="Dashboard" />
-      <div className="py-12 md:h-[80vh] lg:h-[100vh]">
+      <div className="py-12 md:min-h-[80vh] lg:min-h-[100vh]">
         <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">
           <div className=" bg-white shadow-sm sm:rounded-lg dark:bg-gray-800 my-10 p-5 md:p-0">
             <div className="flex justify-between border border-gray-300 p-6 rounded-lg">
@@ -269,7 +269,7 @@ export default function Dashboard({ reviews, prodRev }: DetailProps) {
               )}
             </div>
           </div>
-          <Article classes="grid xl:grid-cols-3 lg:grid-cols-2 md:grid-cols-2 grid-cols-1 gap-5 p-10 justify-content ">
+          <Article classes="grid xl:grid-cols-3 lg:grid-cols-2 md:grid-cols-2 grid-cols-1 gap-5 p-10 justify-content">
             {openRev
               ? reviews.map((review) => {
                   return (
