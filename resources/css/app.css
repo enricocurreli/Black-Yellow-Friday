@@ -14,14 +14,20 @@ h1, h2, h3, h4, h5, h6, a, li{
 
 }
 
-.herobgr{
+.heroHomeBgrd {
     background-image: url(../media/heroIMG.jpg);
     background-size: cover;
     background-position: center;
-    height: 77vh;
-
-    
+    height: 77vh;  
 }
+
+.heroProdBgrd {
+  background-image: url(../media/prodIMG.jpg);
+  background-size: cover;
+  background-position: center;
+  height: 77vh; 
+}
+
 .text-3d {
     font-size: 3rem;
     font-weight: bold;

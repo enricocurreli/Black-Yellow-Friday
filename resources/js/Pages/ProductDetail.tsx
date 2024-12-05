@@ -55,7 +55,6 @@ const ProductDetail = ({ product, reviews }: DetailProps) => {
 
   //Recensione del singolo prodotto
   const searchRev = reviews.filter((rev) => rev.product_id == id);
-  console.log(searchRev);
 
   return (
     <DetailLayout>
@@ -84,15 +83,20 @@ const ProductDetail = ({ product, reviews }: DetailProps) => {
             {product.titolo}
           </Title>
           <Paragraph classes="text-xl mb-5">{product.descrizione}</Paragraph>
-
-          <Title tag="h3" classes="font-bold text-xl mb-2">
-            Prezzo:{" "}
-            <span className="line-through decoration-red-700 text-2xl">
-              {product.prezzo} €
-            </span>
-            {" -> "}
-            {product.prezzo_scontato} €
-          </Title>
+          {product.prezzo_scontato != 0 ? (
+            <Title tag="h3" classes="font-bold text-xl mb-2">
+              Prezzo:{" "}
+              <span className="line-through decoration-red-700 text-2xl">
+                {product.prezzo} €
+              </span>
+              {" -> "}
+              {product.prezzo_scontato} €
+            </Title>
+          ) : (
+            <Title tag="h3" classes="font-bold text-xl mb-2">
+              Prezzo: {product.prezzo} €
+            </Title>
+          )}
         </Article>
         {flashMsg && (
           <div role="alert" className="alert alert-success w-1/2 m-5">
@@ -125,9 +129,7 @@ const ProductDetail = ({ product, reviews }: DetailProps) => {
             <div>
               <label className="text-gray-900 form-control max-w-lg ">
                 <div className="label">
-                  <span className="label-text text-lg text-white">
-                    Titolo
-                  </span>
+                  <span className="label-text text-lg text-white">Titolo</span>
                 </div>
                 <input
                   type="text"
@@ -141,27 +143,54 @@ const ProductDetail = ({ product, reviews }: DetailProps) => {
                 <div className="text-red-500">{errors.titolo}</div>
               )}
             </div>
-            <div>
+            <div className="my-5">
               <label className="form-control">
                 <div className="label">
                   <span className="label-text text-lg text-white">
-                    Descrizione
+                    Descrizione{" "}
+                    <span
+                      className={
+                        data.descrizione.length < 500
+                          ? "text-base ps-3 "
+                          : "text-base ps-3 text-red-600"
+                      }
+                    >
+                      {" "}
+                      {data.descrizione.length}/500{" caratteri "}
+                    </span>
                   </span>
                 </div>
+
                 <textarea
-                  className="textarea bg-white border-black h-32 max-w-lg text-gray-900 "
+                  className="textarea bg-white border-black h-32 max-w-lg text-gray-900"
                   placeholder="Descrizione"
                   value={data.descrizione}
                   onChange={(e) => setData("descrizione", e.target.value)}
-                ></textarea>
+                />
               </label>
               {errors.descrizione && (
                 <div className="text-red-500">{errors.descrizione}</div>
               )}
             </div>
-            <button className="p-5 my-5 md:text-2xl text-lg content-center font-medium text-center md:text-start btn bg-black text-[#FDED00]  shadow-2xl hover:bg-[#FDED00] hover:text-black transition-all" type="submit">
-              Aggiungi
-            </button>
+            {data.descrizione.length < 500 ? (
+              <button
+                className="p-5 my-5 md:text-2xl text-lg content-center font-medium text-center md:text-start btn bg-black text-[#FDED00]  shadow-2xl hover:bg-[#FDED00] hover:text-black transition-all"
+                type="submit"
+              >
+                Aggiungi
+              </button>
+            ) : (
+              <>
+              <div className="text-red-600"> Limite massimo caratteri superato!</div>
+              <button
+                className="p-5 my-5 md:text-2xl text-lg content-center font-medium text-center md:text-start btn bg-black text-[#FDED00]  shadow-2xl hover:bg-[#FDED00] hover:text-black transition-all"
+                type="submit"
+                disabled
+              >
+                Aggiungi
+              </button>
+              </>
+            )}
           </form>
         ) : (
           <div className="ps-10">
@@ -173,19 +202,25 @@ const ProductDetail = ({ product, reviews }: DetailProps) => {
             </Link>
           </div>
         )}
-      <Article>
-        <Title
-          tag="h2"
-          classes="md:my-5 mt-8 p-4 ps-10 md:text-4xl text-3xl content-center font-bold text-center md:text-start"
-        >
-          Recensioni
-        </Title>
-        <Article classes="grid xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-5 p-10 justify-content ">
-          {searchRev.map((review) => {
-            return <CardRev key={review.id} review={review} classes="max-w-[370px]" />;
-          })}
+        <Article>
+          <Title
+            tag="h2"
+            classes="md:my-5 mt-8 p-4 ps-10 md:text-4xl text-3xl content-center font-bold text-center md:text-start"
+          >
+            Recensioni
+          </Title>
+          <Article classes="grid xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-5 p-10 justify-content ">
+            {searchRev.map((review) => {
+              return (
+                <CardRev
+                  key={review.id}
+                  review={review}
+                  classes="max-w-[370px]"
+                />
+              );
+            })}
+          </Article>
         </Article>
-      </Article>
       </Article>
     </DetailLayout>
   );

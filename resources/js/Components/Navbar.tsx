@@ -51,6 +51,15 @@ const Navbar = ({ auth }: PageProps) => {
         </div>
         <div className="flex-none">
           <ul className="menu menu-horizontal px-3 gap-3">
+            <li>
+              {" "}
+              <Link
+                href={route("products")}
+                className="rounded-md px-3 py-2  ring-1 ring-transparent transition focus:outline-none  text-white  text-2xl font-bold   btn-ghost hover:bg-[#FDED00] hover:text-black"
+              >
+                Products
+              </Link>
+            </li>
             {!auth?.user ? (
               <>
                 <li>
@@ -72,20 +81,24 @@ const Navbar = ({ auth }: PageProps) => {
               </>
             ) : (
               <>
-                <Link
-                  href={route("dashboard")}
-                  className="rounded-md px-3 py-2  ring-1 ring-transparent transition focus:outline-none  text-white  text-2xl font-bold   btn-ghost hover:bg-[#FDED00] hover:text-black"
-                >
-                  Dashboard
-                </Link>
-                <Link
-                  href={route("logout")}
-                  method="post"
-                  as="button"
-                  className="rounded-md px-3 py-2  ring-1 ring-transparent transition hover:text-black focus:outline-none  text-white  text-2xl font-bold   btn-ghost hover:bg-red-600 font-[Electrolize]"
-                >
-                  Log Out
-                </Link>
+                <li>
+                  <Link
+                    href={route("dashboard")}
+                    className="rounded-md px-3 py-2  ring-1 ring-transparent transition focus:outline-none  text-white  text-2xl font-bold   btn-ghost hover:bg-[#FDED00] hover:text-black"
+                  >
+                    Dashboard
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href={route("logout")}
+                    method="post"
+                    as="button"
+                    className="rounded-md px-3 py-2  ring-1 ring-transparent transition hover:text-black focus:outline-none  text-white  text-2xl font-bold   btn-ghost hover:bg-red-600 font-[Electrolize]"
+                  >
+                    Log Out
+                  </Link>
+                </li>
               </>
             )}
           </ul>
@@ -115,10 +128,13 @@ const Navbar = ({ auth }: PageProps) => {
             {isOpen && (
               <div ref={dropdownRef}>
                 <ul className="menu menu-sm dropdown-content bg-base-200 rounded-box z-[1] mt-5 w-[375px] p-4 shadow absolute grid grid-cols-3">
-                  <li className=" ">
-                    <a className="btn-ghost hover:bg-[#FDED00] px-3 py-2 hover:text-black text-lg font-bold">
+                  <li>
+                    <Link
+                      href={route("products")}
+                      className="rounded-md px-3 py-2 text-white ring-1 ring-transparent transition focus:outline-none focus-visible:ring-[#FF2D20] dark:text-white dark:hover:text-white/80 dark:focus-visible:ring-white text-lg font-bold hover:bg-[#FDED00] hover:text-black"
+                    >
                       Products
-                    </a>
+                    </Link>
                   </li>
                   {!auth.user ? (
                     <>

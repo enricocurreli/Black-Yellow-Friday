@@ -41,6 +41,10 @@ export type ImgProps = {
   classes?: string;
   alt?: string;
 }
+export type HeroProps = {
+  classes?: string;
+  children: React.ReactNode;
+}
 export type CardProps = {
   children: React.ReactNode
 }
@@ -62,8 +66,8 @@ export interface ReviewFormData {
 export interface Product {
   id: number;
   titolo: string;
-  prezzo: string;
-  prezzo_scontato: string;
+  prezzo: number;
+  prezzo_scontato: number ;
   descrizione: string;
   categorie: string[];
   img: string;

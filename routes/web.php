@@ -31,5 +31,5 @@ Route::post('/products', [ProductController::class, 'store'])->name('products.st
 Route::get('/', [ProductController::class, 'index'])->name('products.homepage');
 Route::get('/product/show/{product}', [ProductController::class, 'show'])->name('products.show');
 Route::post('/reviews', [ProductController::class, 'storeReview'])->name('reviews.store');
-
+Route::get('/products', [ProductController::class, 'allProd'])->name('products');
 require __DIR__.'/auth.php';

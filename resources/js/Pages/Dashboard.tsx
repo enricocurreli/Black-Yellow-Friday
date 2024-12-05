@@ -132,7 +132,7 @@ export default function Dashboard({ reviews, prodRev }: DetailProps) {
                     <label className="text-gray-900 form-control w-full max-w-xs ">
                       <div className="label">
                         <span className="label-text text-gray-900">
-                          Prezzo Scontato €
+                         * Prezzo Scontato € 
                         </span>
                       </div>
                       <input
@@ -218,6 +218,9 @@ export default function Dashboard({ reviews, prodRev }: DetailProps) {
                   <button className="btn text-white" type="submit">
                     Aggiungi
                   </button>
+                  <span className="label-text text-gray-900">
+                       * ( 0 per non inserire un prezzo scontato )
+                      </span>
                 </form>
               ) : (
                 ""

@@ -20,7 +20,11 @@ class ProductController extends Controller
         return Inertia('Welcome', ['products' => $products]);
     }
 
-
+    public function allProd()
+    {
+        $products = Product::all();
+        return Inertia::render('Products', ['products' => $products]);
+    }
 
     public function store(ProductRequest $request)
     {
@@ -50,7 +54,7 @@ class ProductController extends Controller
         $validated = $request->validate([
             'product_id' => 'required|exists:products,id',
             'titolo' => 'required|string|min:1',
-            'descrizione' => 'required|string|max:400',
+            'descrizione' => 'required|string|max:500',
         ]);
         $validated['user_name'] = $request->user()->name;
         $request->user()->reviews()->create($validated);
