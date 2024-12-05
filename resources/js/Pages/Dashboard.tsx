@@ -25,7 +25,7 @@ export default function Dashboard({ reviews, prodRev }: DetailProps) {
       },
     });
   };
-  console.log(reviews, prodRev);
+  
   
   const { flash, auth } = usePage().props;
   const [flashMsg, setFlashMsg] = useState(flash?.message);
@@ -52,7 +52,8 @@ export default function Dashboard({ reviews, prodRev }: DetailProps) {
   const user = auth?.user.name;
   const [openAdd, setOpenAdd] = useState<boolean>(false);
   const [openRev, setOpenRev] = useState<boolean>(false);
-  console.log(reviews);
+  
+  
 
   return (
     <AuthenticatedLayout
@@ -281,10 +282,14 @@ export default function Dashboard({ reviews, prodRev }: DetailProps) {
                       <div className="card-body">
                        
                           {
-                            prodRev.map((prod)=> {
-                              if(prod.id === review.product_id){
-                                return <Link href={`product/show/${prod.id}`} className="card-title text-black"> {prod.titolo} </Link >
-                            }})  
+                            Object.entries(prodRev).map(([key, product]) => {
+                              if(product.id === review.product_id){
+                                return <Link key={product.id} href={`product/show/${product.id}`} className="card-title text-black"> {product.titolo} </Link >
+                            }
+                            })
+
+
+                           
                           } 
                         
                         

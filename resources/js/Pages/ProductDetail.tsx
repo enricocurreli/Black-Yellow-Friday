@@ -190,7 +190,7 @@ const ProductDetail = ({ product, reviews }: DetailProps) => {
                 Aggiungi
               </button>
               </>
-            )}
+            )}   
           </form>
         ) : (
           <div className="ps-10">
